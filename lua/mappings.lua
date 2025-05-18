@@ -23,3 +23,6 @@ map("n", "<C-Up>", "<cmd>resize +2<CR>", {desc = "Increase window height"})
 map("n", "<C-Down>", "<cmd>resize -2<CR>", {desc = "Decrease window height"})
 map("n", "<C-Left>", "<cmd>vertical resize +2<CR>", {desc = "Increase window width"})
 map("n", "<C-Right>", "<cmd>vertical resize -2<CR>", {desc = "Decrease window width"})
+
+-- Lazygit binds
+map("n", "<leader>gg", "<cmd>LazyGit<CR>", {desc = "Open LazyGit"})
