@@ -1,3 +1,4 @@
+local lazy = require "lazy"
 return {
   {
     "stevearc/conform.nvim",
@@ -15,7 +16,9 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    lazy = false,
     opts = {
+      auto_install = true,
       ensure_installed = {
         "vim",
         "lua",
@@ -64,7 +67,7 @@ return {
 
   {
     "rcarriga/nvim-dap-ui",
-    --event = "VeryLazy",
+    lazy = false,
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
     config = function()
       local dap = require "dap"
@@ -103,5 +106,23 @@ return {
     keys = {
       { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
     },
+  },
+
+  {
+    "alvan/vim-closetag",
+    lazy = false,
+  },
+
+  {
+    "github/copilot.vim",
+    lazy = false,
+  },
+
+  {
+    "L3MON4D3/LuaSnip",
+    -- follow latest release.
+    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+    -- install jsregexp (optional!).
+    build = "make install_jsregexp",
   },
 }
