@@ -95,6 +95,11 @@ return {
           }
         end
       end
+      dap.adapters.gdb = {
+        type = "executable",
+        command = "gdb",
+        args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
+      }
       dap.configurations.python = {
         {
           -- The first three options are required by nvim-dap
@@ -133,6 +138,20 @@ return {
           stopAtBeginningOfMainSubprogram = false,
         },
         {
+          name = "Launch with arguments",
+          type = "gdb",
+          request = "launch",
+          program = function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          args = function()
+            local args_string = vim.fn.input "Arguments: "
+            return vim.split(args_string, " +") -- Splits the input string by spaces
+          end,
+          cwd = "${workspaceFolder}",
+          stopAtBeginningOfMainSubprogram = false,
+        },
+        {
           name = "Select and attach to process",
           type = "gdb",
           request = "attach",
@@ -156,6 +175,8 @@ return {
           cwd = "${workspaceFolder}",
         },
       }
+      -- Set C configurations to be the same as C++
+      dap.configurations.c = dap.configurations.cpp
     end,
   },
   {
