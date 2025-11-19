@@ -1,4 +1,3 @@
-local lazy = require "lazy"
 return {
   {
     "stevearc/conform.nvim",
@@ -70,6 +69,7 @@ return {
     lazy = false,
     config = function()
       local dap = require "dap"
+      -- Python adapter
       dap.adapters.python = function(cb, config)
         if config.request == "attach" then
           ---@diagnostic disable-next-line: undefined-field
@@ -95,11 +95,13 @@ return {
           }
         end
       end
+      -- C/C++ adapter
       dap.adapters.gdb = {
         type = "executable",
         command = "gdb",
         args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
       }
+      -- Python configurations
       dap.configurations.python = {
         {
           -- The first three options are required by nvim-dap
@@ -124,8 +126,30 @@ return {
             end
           end,
         },
-      }
+        {
+          -- The first three options are required by nvim-dap
+          type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
+          request = "launch",
+          name = "Launch file with args",
 
+          program = "${file}", -- This configuration will launch the current file if used.
+          args = function()
+            local input = vim.fn.input "Input args: "
+            return vim.split(input, " ")
+          end,
+          pythonPath = function()
+            local cwd = vim.fn.getcwd()
+            if vim.fn.executable(cwd .. "/venv/bin/python3") == 1 then
+              return cwd .. "/venv/bin/python3"
+            elseif vim.fn.executable(cwd .. "/.venv/bin/python3") == 1 then
+              return cwd .. "/.venv/bin/python3"
+            else
+              return "/usr/bin/python3"
+            end
+          end,
+        },
+      }
+      -- C/C++ configurations
       dap.configurations.cpp = {
         {
           name = "Launch",
@@ -228,8 +252,7 @@ return {
   },
 
   {
-    "github/copilot.vim",
-    lazy = false,
+    { "github/copilot.vim", lazy = false },
   },
 
   {
@@ -238,5 +261,16 @@ return {
     version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
     -- install jsregexp (optional!).
     build = "make install_jsregexp",
+  },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    lazy = false,
+    dependencies = {
+      { "nvim-lua/plenary.nvim", branch = "master" },
+    },
+    build = "make tiktoken",
+    opts = {
+      -- See Configuration section for options
+    },
   },
 }

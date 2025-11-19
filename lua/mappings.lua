@@ -20,7 +20,7 @@ map("n", "<leader>dt", "<cmd>DapTerminate<CR>", { desc = "Terminate Debugger" })
 map("n", "<leader>db", "<cmd>DapToggleBreakpoint<CR>", { desc = "Add Breakpoint" })
 map("n", "<leader>do", "<cmd>DapStepOver<CR>", { desc = "Step Over" })
 map("n", "<leader>di", "<cmd>DapStepInto<CR>", { desc = "Step Into" })
-map("n", "<leader>dl", "<cmd>:lua require'dap'.repl.open()<CR>", { desc = "Open REPL" })
+map("n", "<leader>dt", "<cmd>DapTerminate<CR>", { desc = "Terminate Debugger" })
 
 -- Remap window resizing
 map("n", "<C-Up>", "<cmd>resize +2<CR>", { desc = "Increase window height" })
