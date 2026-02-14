@@ -1,6 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
+    lazy = false,
     -- event = 'BufWritePre', -- uncomment for format on save
     opts = require "configs.conform",
   },
@@ -201,12 +202,53 @@ return {
       }
       -- Set C configurations to be the same as C++
       dap.configurations.c = dap.configurations.cpp
+      dap.configurations.zig = dap.configurations.cpp
     end,
   },
   {
     "rcarriga/nvim-dap-ui",
     lazy = false,
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+    opts = {
+      layouts = {
+        {
+          elements = {
+            {
+              id = "scopes",
+              size = 0.25,
+            },
+            {
+              id = "breakpoints",
+              size = 0.25,
+            },
+            {
+              id = "stacks",
+              size = 0.25,
+            },
+            {
+              id = "watches",
+              size = 0.25,
+            },
+          },
+          position = "left",
+          size = 40,
+        },
+        {
+          elements = {
+            {
+              id = "repl",
+              size = 0.5,
+            },
+            {
+              id = "disassembly",
+              size = 0.5,
+            },
+          },
+          position = "bottom",
+          size = 10,
+        },
+      },
+    },
     config = function()
       local dap = require "dap"
       local dapui = require "dapui"
@@ -224,6 +266,24 @@ return {
         dapui.close()
       end
     end,
+  },
+  {
+    "Jorenar/nvim-dap-disasm",
+    lazy = false,
+    dependencies = { "mfussenegger/nvim-dap" },
+    opts = {
+      dapui_register = true,
+      columns = {
+        "address",
+        "instructionBytes",
+        "instruction",
+      },
+      repl_commands = true,
+      -- Number of instructions to show before the memory reference
+      ins_before_memref = 16,
+      -- Number of instructions to show after the memory reference
+      ins_after_memref = 16,
+    },
   },
   {
     "kdheepak/lazygit.nvim",
