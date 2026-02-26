@@ -96,12 +96,23 @@ return {
           }
         end
       end
-      -- C/C++ adapter
+      -- GDB Adapter
       dap.adapters.gdb = {
         type = "executable",
         command = "gdb",
         args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
       }
+
+      -- CodeLLDB Adapter
+      dap.adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          command = "codelldb",
+          args = { "--port", "${port}" },
+        },
+      }
+
       -- Python configurations
       dap.configurations.python = {
         {
@@ -176,33 +187,35 @@ return {
           cwd = "${workspaceFolder}",
           stopAtBeginningOfMainSubprogram = false,
         },
+      }
+
+      dap.configurations.zig = {
         {
-          name = "Select and attach to process",
-          type = "gdb",
-          request = "attach",
-          program = function()
-            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-          end,
-          pid = function()
-            local name = vim.fn.input "Executable name (filter): "
-            return require("dap.utils").pick_process { filter = name }
-          end,
+          name = "Launch",
+          type = "codelldb",
+          request = "launch",
+          program = "${workspaceFolder}/zig-out/bin/${workspaceFolderBasename}",
           cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+          args = {},
         },
         {
-          name = "Attach to gdbserver :1234",
-          type = "gdb",
-          request = "attach",
-          target = "localhost:1234",
+          name = "Launch with arguments",
+          type = "codelldb",
+          request = "launch",
           program = function()
             return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
           end,
           cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+          args = function()
+            local args_string = vim.fn.input "Arguments: "
+            return vim.split(args_string, " +") -- Splits the input string by spaces
+          end,
         },
       }
       -- Set C configurations to be the same as C++
       dap.configurations.c = dap.configurations.cpp
-      dap.configurations.zig = dap.configurations.cpp
     end,
   },
   {
