@@ -16,6 +16,18 @@ for _, lsp in ipairs(servers) do
   })
 end
 
+vim.lsp.config("clangd", {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  filetypes = { "c", "cpp", "h", "hpp" },
+  settings = {
+    clangd = {
+      cmd = { "clangd"},--, "std-c++23" },
+    },
+  },
+})
+
 -- configuring single server, example: typescript
 vim.lsp.config("ts_ls", {
   on_attach = nvlsp.on_attach,

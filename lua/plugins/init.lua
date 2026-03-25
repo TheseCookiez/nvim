@@ -25,6 +25,13 @@ return {
         "vimdoc",
         "html",
         "css",
+        "cpp",
+        "zig",
+        "go",
+        "python",
+        "javascript",
+        "typescript",
+        "tsx",
       },
     },
   },
@@ -40,6 +47,7 @@ return {
         "zls",
         "pyright",
         "ts_ls",
+        "zls",
         "eslint",
       },
       ui = {
@@ -345,5 +353,16 @@ return {
     opts = {
       -- See Configuration section for options
     },
+  },
+  {
+    "chrisgrieser/nvim-origami",
+    event = "VeryLazy",
+    opts = {}, -- required even when using default config
+
+    -- recommended: disable vim's auto-folding
+    init = function()
+      vim.opt.foldlevel = 99
+      vim.opt.foldlevelstart = 99
+    end,
   },
 }
