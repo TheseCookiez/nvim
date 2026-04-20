@@ -357,12 +357,14 @@ return {
   {
     "chrisgrieser/nvim-origami",
     event = "VeryLazy",
-    opts = {}, -- required even when using default config
+    opts = {
+      setupFiles = false,
+    }, -- required even when using default config
 
     -- recommended: disable vim's auto-folding
     init = function()
-      vim.opt.foldlevel = 99
-      vim.opt.foldlevelstart = 99
+      vim.opt.foldlevel = 999
+      vim.opt.foldlevelstart = 999
     end,
   },
 }
