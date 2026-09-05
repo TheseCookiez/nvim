@@ -32,14 +32,16 @@ map("n", "<C-Right>", "<cmd>vertical resize -2<CR>", { desc = "Decrease window w
 map("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "Open LazyGit" })
 
 -- Copilot binds
-vim.keymap.set("i", "<C-J>", 'copilot#Accept("\\<CR>")', {
+map("i", "<C-J>", 'copilot#Accept("\\<CR>")', {
   expr = true,
   replace_keycodes = false,
 })
 vim.g.copilot_no_tab_map = true
 
 -- Copilot accept word
-vim.keymap.set('i', '<C-L>', '<Plug>(copilot-accept-word)')
+map('i', '<C-L>', '<Plug>(copilot-accept-word)')
 -- Copilot next/previous suggestion
-vim.keymap.set('i', '<C-N>', '<Plug>(copilot-next)')
-vim.keymap.set('i', '<C-B>', '<Plug>(copilot-previous)')
+map('i', '<C-N>', '<Plug>(copilot-next)')
+map('i', '<C-B>', '<Plug>(copilot-previous)')
+
+map("n", "<Leader>nf", ":lua require('neogen').generate()<CR>")

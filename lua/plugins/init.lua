@@ -328,11 +328,6 @@ return {
   },
 
   {
-    "alvan/vim-closetag",
-    lazy = false,
-  },
-
-  {
     { "github/copilot.vim", lazy = false },
   },
 
@@ -354,17 +349,15 @@ return {
       -- See Configuration section for options
     },
   },
+  -- HTML/JSX autoclose tags
   {
-    "chrisgrieser/nvim-origami",
-    event = "VeryLazy",
-    opts = {
-      setupFiles = false,
-    }, -- required even when using default config
-
-    -- recommended: disable vim's auto-folding
-    init = function()
-      vim.opt.foldlevel = 999
-      vim.opt.foldlevelstart = 999
-    end,
+    "windwp/nvim-ts-autotag",
+    lazy = false,
+  },
+  {
+    "danymat/neogen",
+    config = true,
+    -- Uncomment next line if you want to follow only stable versions
+    version = "*"
   },
 }
